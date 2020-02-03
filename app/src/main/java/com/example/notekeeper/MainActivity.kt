@@ -1,11 +1,12 @@
 package com.example.notekeeper
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import android.widget.ArrayAdapter
+import com.example.notekeeper.models.User
+import com.example.notekeeper.services.DataManager
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -17,28 +18,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        button.setOnClickListener {
-            val (originalValue, newValue) = multiplyDisplayedValueBy2()
-            showSnackbar(it, originalValue, newValue)
-        }
+        val userNames: List<String> = DataManager.users.values.map {
+            it.username
+        }.toList()
 
-        fab.setOnClickListener { view ->
-            val (originalValue, newValue) = multiplyDisplayedValueBy2()
-            showSnackbar(view, originalValue, newValue)
-        }
-    }
-
-    private fun showSnackbar(view: View, originalValue: Int, newValue: Int) {
-        Snackbar
-            .make(view, "Value: $originalValue changed to $newValue", Snackbar.LENGTH_SHORT)
-            .show()
-    }
-
-    private fun multiplyDisplayedValueBy2(): Pair<Int, Int> {
-        val originalValue = textDisplayedValue.text.toString().toInt()
-        val newValue = originalValue * 2
-        textDisplayedValue.text = newValue.toString()
-        return Pair(originalValue, newValue)
+        val adapterUsers = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            userNames
+        )
+        adapterUsers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        userSpinner.adapter = adapterUsers
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
