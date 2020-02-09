@@ -1,11 +1,15 @@
 package com.example.notekeeper.models
 
-class Note(
-    val noteId: Long,
-    val title: String,
-    val text: String,
-    val user: User
-)
+data class Note(
+    val noteId: Long? = null,
+    var title: String? = null,
+    var text: String? = null,
+    val user: User? = null
+) {
+    override fun toString(): String {
+        return "$title - $text"
+    }
+}
 
 class User(
     val userId: Long,

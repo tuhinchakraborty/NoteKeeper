@@ -3,10 +3,10 @@ package com.example.notekeeper.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.notekeeper.MainActivity
 import com.example.notekeeper.R
+import com.example.notekeeper.models.Note
 import com.example.notekeeper.services.DataManager
 
 import kotlinx.android.synthetic.main.activity_note_list.*
@@ -24,15 +24,26 @@ class NoteListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val listOfNotes = DataManager.notes.map {
-            it.title
-        }.toList()
+        noteList.setOnItemClickListener { parent, view, position, id ->
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("EXTRA_NOTE_POSITION", position)
+            startActivity(intent)
+        }
+
+//        val listOfNoteTitles = DataManager.notes.map {
+//            it.title
+//        }.toList()
 
         noteList.adapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
-            listOfNotes
+            DataManager.notes
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (noteList.adapter as ArrayAdapter<Note>).notifyDataSetChanged()
     }
 
 }
