@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.notekeeper.models.Note
 import com.example.notekeeper.services.DataManager
+import com.google.android.material.snackbar.Snackbar
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -33,6 +34,14 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if (position >= DataManager.notes.lastIndex) {
+            val nextMenuItem = menu?.findItem(R.id.action_next)
+            if (nextMenuItem != null) nextMenuItem.icon = getDrawable(R.drawable.ic_block_black_24dp)
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -40,22 +49,12 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             R.id.action_next -> {
-                moveNext()
+                if (position < DataManager.notes.lastIndex) moveNext()
+                else Snackbar.make(noteTitleText, "No More Notes", Snackbar.LENGTH_LONG).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (position >= DataManager.notes.lastIndex) {
-            val menuItem = menu?.findItem(R.id.action_next)
-            if (menuItem != null) {
-                menuItem.icon = getDrawable(R.drawable.ic_block_black_24dp)
-                menuItem.isEnabled = false
-            }
-        }
-        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
