@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         if (position >= DataManager.notes.lastIndex) {
             val nextMenuItem = menu?.findItem(R.id.action_next)
             if (nextMenuItem != null) nextMenuItem.icon = getDrawable(R.drawable.ic_block_black_24dp)
+        } else if (position <= 0) {
+            val previousMenuItem = menu?.findItem(R.id.action_back)
+            if (previousMenuItem != null) previousMenuItem.icon = getDrawable(R.drawable.ic_block_black_24dp)
         }
         return super.onPrepareOptionsMenu(menu)
     }
@@ -50,6 +53,11 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             R.id.action_next -> {
                 if (position < DataManager.notes.lastIndex) moveNext()
+                else Snackbar.make(noteTitleText, "No More Notes", Snackbar.LENGTH_LONG).show()
+                true
+            }
+            R.id.action_back -> {
+                if (position > 0) moveBack()
                 else Snackbar.make(noteTitleText, "No More Notes", Snackbar.LENGTH_LONG).show()
                 true
             }
@@ -88,6 +96,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun moveNext() {
         displayNote(++ position)
+        invalidateOptionsMenu()
+    }
+
+    private fun moveBack() {
+        displayNote(-- position)
         invalidateOptionsMenu()
     }
 
