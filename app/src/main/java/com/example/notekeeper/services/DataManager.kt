@@ -28,4 +28,16 @@ object DataManager {
         notes.add(noteUserOne)
         notes.add(noteUserTwo)
     }
+
+    fun addNote(title: String, text: String): Int {
+        val note = Note(3L, title, text, users[1L]!!)
+        notes.add(note)
+        return notes.lastIndex
+    }
+
+    fun findNote(title: String): List<Note> {
+        return notes.filter {
+            it.title == title
+        }
+    }
 }

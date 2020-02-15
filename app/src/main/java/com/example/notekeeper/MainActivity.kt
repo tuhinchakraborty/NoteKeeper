@@ -1,6 +1,7 @@
 package com.example.notekeeper
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -22,10 +23,18 @@ class MainActivity : AppCompatActivity() {
 
         position = getNotePosition(savedInstanceState)
 
-        if (position != -1) displayNote(position) else {
-            DataManager.notes.add(Note())
-            position = DataManager.notes.lastIndex
-        }
+        if (position != -1)
+            displayNote(position)
+        else
+            createNote()
+
+        Log.d(this::class.simpleName, "onCreate")
+    }
+
+    override fun onPause() {
+        saveNote()
+        super.onPause()
+        Log.d(this::class.simpleName, "onPause")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -78,14 +87,15 @@ class MainActivity : AppCompatActivity() {
             )
 
     private fun displayNote(position: Int) {
+        Log.i(this::class.simpleName, "Note Position $position")
         val note = DataManager.notes[position]
         noteTitleText.setText(note.title)
         noteBodyText.setText(note.text)
     }
 
-    override fun onPause() {
-        saveNote()
-        super.onPause()
+    private fun createNote() {
+        DataManager.notes.add(Note())
+        position = DataManager.notes.lastIndex
     }
 
     private fun saveNote() {
