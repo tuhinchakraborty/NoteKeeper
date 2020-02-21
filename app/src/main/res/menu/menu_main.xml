@@ -4,7 +4,7 @@
     tools:context="com.example.notekeeper.MainActivity">
     <item
         android:id="@+id/action_back"
-        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:icon="@drawable/ic_arrow_back_white_24dp"
         android:title="Back"
         app:showAsAction="ifRoom|withText" />
     <item
@@ -14,7 +14,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_next"
-        android:icon="@drawable/ic_arrow_forward_black_24dp"
+        android:icon="@drawable/ic_arrow_forward_white_24dp"
         android:title="Next"
         app:showAsAction="ifRoom|withText" />
 </menu>

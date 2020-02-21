@@ -46,10 +46,10 @@ class MainActivity : AppCompatActivity() {
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         if (position >= DataManager.notes.lastIndex) {
             val nextMenuItem = menu?.findItem(R.id.action_next)
-            if (nextMenuItem != null) nextMenuItem.icon = getDrawable(R.drawable.ic_block_black_24dp)
+            if (nextMenuItem != null) nextMenuItem.icon = getDrawable(R.drawable.ic_block_white_24dp)
         } else if (position <= 0) {
             val previousMenuItem = menu?.findItem(R.id.action_back)
-            if (previousMenuItem != null) previousMenuItem.icon = getDrawable(R.drawable.ic_block_black_24dp)
+            if (previousMenuItem != null) previousMenuItem.icon = getDrawable(R.drawable.ic_block_white_24dp)
         }
         return super.onPrepareOptionsMenu(menu)
     }
