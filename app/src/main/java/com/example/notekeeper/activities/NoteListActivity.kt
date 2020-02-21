@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.example.notekeeper.MainActivity
 import com.example.notekeeper.R
 import com.example.notekeeper.models.Note
 import com.example.notekeeper.services.DataManager
@@ -20,12 +19,12 @@ class NoteListActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, NoteActivity::class.java)
             startActivity(intent)
         }
 
         noteList.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, NoteActivity::class.java)
             intent.putExtra("EXTRA_NOTE_POSITION", position)
             startActivity(intent)
         }

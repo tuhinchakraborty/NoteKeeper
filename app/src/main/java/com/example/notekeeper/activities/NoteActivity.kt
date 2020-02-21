@@ -1,10 +1,11 @@
-package com.example.notekeeper
+package com.example.notekeeper.activities
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.notekeeper.R
 import com.example.notekeeper.models.Note
 import com.example.notekeeper.services.DataManager
 import com.google.android.material.snackbar.Snackbar
@@ -12,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
+class NoteActivity : AppCompatActivity() {
 
     var position: Int = -1
 

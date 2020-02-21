@@ -17,7 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class NoteActivityTest {
 
     @JvmField
     @Rule // tells the test system this rule exists
