@@ -22,18 +22,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         position = getNotePosition(savedInstanceState)
-
         if (position != -1)
             displayNote(position)
-        else
-            createNote()
 
         Log.d(this::class.simpleName, "onCreate")
     }
 
     override fun onPause() {
-        saveNote()
         super.onPause()
+        saveNote()
         Log.d(this::class.simpleName, "onPause")
     }
 
@@ -99,9 +96,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveNote() {
-        val note = DataManager.notes[position]
-        note.title = noteTitleText.text.toString()
-        note.text = noteBodyText.text.toString()
+        if (noteTitleText.text.toString().isNotEmpty() || noteBodyText.text.toString().isNotEmpty()) {
+            createNote()
+            val note = DataManager.notes[position]
+            note.title = noteTitleText.text.toString()
+            note.text = noteBodyText.text.toString()
+        }
     }
 
     private fun moveNext() {
