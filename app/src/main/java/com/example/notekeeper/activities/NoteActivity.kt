@@ -98,7 +98,9 @@ class NoteActivity : AppCompatActivity() {
 
     private fun saveNote() {
         if (noteTitleText.text.toString().isNotEmpty() || noteBodyText.text.toString().isNotEmpty()) {
-            createNote()
+            if (position == -1) {
+                createNote()
+            }
             val note = DataManager.notes[position]
             note.title = noteTitleText.text.toString()
             note.text = noteBodyText.text.toString()
