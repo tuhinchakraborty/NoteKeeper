@@ -22,11 +22,17 @@ object DataManager {
     }
 
     private fun initializeNotes() {
-        val noteUserOne = Note(1L, "First Note", "This is a note", users[1L]!!)
-        val noteUserTwo = Note(2L, "Second Note", "This is a note", users[2L]!!)
+        val noteOne = Note(1L, "First Note", "This is a note", users[1L]!!)
+        val noteTwo = Note(2L, "Second Note", "This is a note", users[2L]!!)
+        val noteThree = Note(2L, "Third Note", "This is a note", users[2L]!!)
+        val noteFour = Note(2L, "Fourth Note", "This is a note", users[2L]!!)
+        val noteFive = Note(2L, "Fifth Note", "This is a note", users[2L]!!)
 
-        notes.add(noteUserOne)
-        notes.add(noteUserTwo)
+        notes.add(noteOne)
+        notes.add(noteTwo)
+        notes.add(noteThree)
+        notes.add(noteFour)
+        notes.add(noteFive)
     }
 
     fun addNote(title: String, text: String): Int {

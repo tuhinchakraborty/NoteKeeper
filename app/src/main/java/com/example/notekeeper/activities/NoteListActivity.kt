@@ -2,12 +2,11 @@ package com.example.notekeeper.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.notekeeper.R
-import com.example.notekeeper.models.Note
+import com.example.notekeeper.adapters.NoteRecyclerAdapter
 import com.example.notekeeper.services.DataManager
-
 import kotlinx.android.synthetic.main.activity_note_list.*
 import kotlinx.android.synthetic.main.content_note_list.*
 
@@ -23,26 +22,14 @@ class NoteListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        noteList.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, NoteActivity::class.java)
-            intent.putExtra("EXTRA_NOTE_POSITION", position)
-            startActivity(intent)
-        }
+        listNotes.layoutManager = GridLayoutManager(this, 2)
+        listNotes.adapter = NoteRecyclerAdapter(this, DataManager.notes)
 
-//        val listOfNoteTitles = DataManager.notes.map {
-//            it.title
-//        }.toList()
-
-        noteList.adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            DataManager.notes
-        )
     }
 
     override fun onResume() {
         super.onResume()
-        (noteList.adapter as ArrayAdapter<Note>).notifyDataSetChanged()
+        (listNotes.adapter as NoteRecyclerAdapter).notifyDataSetChanged()
     }
 
 }
