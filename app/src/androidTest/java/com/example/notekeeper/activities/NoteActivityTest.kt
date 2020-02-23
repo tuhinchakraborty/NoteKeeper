@@ -1,12 +1,14 @@
-package com.example.notekeeper
+package com.example.notekeeper.activities
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import com.example.notekeeper.activities.NoteListActivity
+import com.example.notekeeper.R
+import com.example.notekeeper.adapters.views.ViewHolder
 import com.example.notekeeper.models.Note
 import com.example.notekeeper.services.DataManager
 import junit.framework.Assert.assertEquals
@@ -59,12 +61,8 @@ class NoteActivityTest {
     @Test
     fun shouldViewNote() {
         val note = testNotes[0]
-        Espresso.onData(
-            Matchers.allOf(
-                Matchers.instanceOf(Note::class.java),
-                Matchers.equalTo(note)
-            )
-        ).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.listNotes))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<ViewHolder>(0, ViewActions.click()))
 
         Espresso.onView(ViewMatchers.withId(R.id.noteTitleText))
             .check(ViewAssertions.matches(ViewMatchers.withText(note.title)))
@@ -74,12 +72,8 @@ class NoteActivityTest {
 
     @Test
     fun shouldNavigateToNextNote() {
-        Espresso.onData(
-            Matchers.allOf(
-                Matchers.instanceOf(Note::class.java),
-                Matchers.equalTo(testNotes[0])
-            )
-        ).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.listNotes))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<ViewHolder>(0, ViewActions.click()))
 
         Espresso.onView(
             Matchers.allOf(
@@ -96,12 +90,8 @@ class NoteActivityTest {
 
     @Test
     fun shouldNavigateToPreviousNote() {
-        Espresso.onData(
-            Matchers.allOf(
-                Matchers.instanceOf(Note::class.java),
-                Matchers.equalTo(testNotes[1])
-            )
-        ).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.listNotes))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<ViewHolder>(1, ViewActions.click()))
 
         Espresso.onView(
             Matchers.allOf(

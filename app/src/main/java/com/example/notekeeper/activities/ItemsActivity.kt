@@ -3,6 +3,7 @@ package com.example.notekeeper.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -18,12 +19,20 @@ import com.example.notekeeper.adapters.NoteRecyclerAdapter
 import com.example.notekeeper.services.DataManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_items.*
 import kotlinx.android.synthetic.main.content_items.*
 
-class ItemsActivity : AppCompatActivity() {
+class ItemsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private val noteLayoutManager by lazy {
+        GridLayoutManager(this, 2)
+    }
+    private val noteRecyclerAdapter by lazy {
+        NoteRecyclerAdapter(this, DataManager.notes)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +51,14 @@ class ItemsActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,
+                R.id.nav_notes,
                 R.id.nav_tools
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        listItems.layoutManager = GridLayoutManager(this, 2)
-        listItems.adapter = NoteRecyclerAdapter(this, DataManager.notes)
+        navView.setNavigationItemSelectedListener(this)
+        showNotesLayout()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -75,5 +83,19 @@ class ItemsActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_notes -> showNotesLayout()
+            R.id.nav_settings -> Snackbar.make(listItems, "settings", Snackbar.LENGTH_LONG).show()
+        }
+        drawer_layout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    private fun showNotesLayout() {
+        listItems.layoutManager = noteLayoutManager
+        listItems.adapter = noteRecyclerAdapter
     }
 }
